@@ -1,0 +1,15 @@
+= Source{[Item="Tableau1",Kind="Table"]}[Data]
+#Ajout d'une colonne "TotalSales
+=Table.AddColumn(Tableau1_Table, "TotalSales", each [Quantity]*[UnitPrice])
+#Ajout d'une colonne "Profit" Qui fait (TatalSales-Quantity)*Cost
+= Table.AddColumn(#"Personnalisée ajoutée", "Profit", each [TotalSales]-[Quantity]*[Cost])
+#Ajout d'une colonne "ProfitMargin" Qui fait Profit/TotalSales
+=Table.AddColumn(#"Personnalisée ajoutée1", "ProfitMargin", each [Profit]/[TotalSales])
+#Ajout d'une colonne "Month" Qui prend le mois de la date
+= Table.AddColumn(#"Personnalisée ajoutée2", "Month", each Date.Month([Date]))
+#Ajout d'une colonne "Quart" Qui prend le trimestre  de la date et renvoie en chiffre
+= Table.AddColumn(#"Personnalisée ajoutée3", "Quartr", each "Q"& Number.ToText(Date.QuarterOfYear([Date])))
+#Ajout d'une colonne "Year" Qui prend l'année de la date
+= Table.AddColumn(#"Personnalisée ajoutée4", "Year", each Date.Year([Date]))
+#Change le type de UnitPrice et Cost en nombre decimal
+= Table.TransformColumnTypes(#"Personnalisée ajoutée5",{{"UnitPrice", type number}, {"Cost", type number}})
